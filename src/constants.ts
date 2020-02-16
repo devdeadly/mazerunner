@@ -5,4 +5,5 @@ export const COLORS =  {
    WALL: '#000000',
 }
 
-export const MAZE_SPEED = 1 //ms
+export const DIMENSIONS = 41 //ms
+export const MAZE_SPEED = 10 //ms

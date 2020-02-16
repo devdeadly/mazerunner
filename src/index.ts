@@ -1,7 +1,8 @@
 // import './firebase'
 import {
   COLORS,
-  MAZE_SPEED
+  MAZE_SPEED,
+  DIMENSIONS
 } from './constants';
 
 import { generateMaze } from './generate';
@@ -11,7 +12,7 @@ const ctx: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRendering
 
 let maze;
 let CANVAS_DIMENSION: number = 900;
-
+let timeout;
 canvas.height = CANVAS_DIMENSION;
 canvas.width = CANVAS_DIMENSION;
 
@@ -19,18 +20,22 @@ let CANVAS_ROWS_COLS: number;
 let CELL_DIMENSION: number;
 
 const kickoff = () => {
-  maze = generateMaze(77, 77)
-  initializeBoard();
+  if (timeout) {
+    clearTimeout(timeout)
+  }
+  maze = generateMaze(DIMENSIONS, DIMENSIONS)
   CANVAS_ROWS_COLS = maze.length;
   CELL_DIMENSION = CANVAS_DIMENSION / CANVAS_ROWS_COLS;
 
   canvas.height = CANVAS_DIMENSION;
   canvas.width = CANVAS_DIMENSION;
+  initializeBoard();
 
   solve(maze)
 }
 
 const initializeBoard = () => {
+  console.log('ib', maze)
   for (let i = 0; i < CANVAS_ROWS_COLS; i++) {
     for (let j = 0; j < CANVAS_ROWS_COLS; j++) {
       switch(maze[i][j]) {
@@ -71,7 +76,7 @@ const color = (coords: number[], color: string): void => {
 const solve = (maze, r = 0, c = 0, history = []) => {
   maze[r][c] = 2 // 2 === visited cell
   color([r, c], COLORS.GOOD)
-  setTimeout(() => {
+  timeout = setTimeout(() => {
     if (hasFinished(maze, r, c)) return
     else if (isPath(r, c + 1) && !!history.push([r, c]))    return solve(maze, r, c + 1, history)
     else if (isPath(r + 1, c) && !!history.push([r, c]))    return solve(maze, r + 1, c, history)
