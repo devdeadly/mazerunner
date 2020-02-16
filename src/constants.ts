@@ -1,6 +1,8 @@
-export class COLORS {
-  static GOOD: string = '#71a83a';
-  static BAD: string = '#d52227';
-  static PATH: string = '#FFFFFF';
-  static WALL: string = '#000000';
+export const COLORS =  {
+   GOOD: '#71a83a',
+   BAD: '#d52227',
+   PATH: '#FFFFFF',
+   WALL: '#000000',
 }
+
+export const MAZE_SPEED = 1 //ms
